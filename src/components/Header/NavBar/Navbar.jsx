@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import styles from './App.module.css';
+import styles from './NavBar.module.css';
 
-export default class App extends Component {
+export default class Navbar extends Component {
   render() {
     return (
       <div>
@@ -10,4 +10,3 @@ export default class App extends Component {
     )
   }
 }
-
