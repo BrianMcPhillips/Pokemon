@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import styles from './App.module.css';
+import styles from './PokeItem.module.css';
 
-export default class App extends Component {
+export default class PokeItem extends Component {
   render() {
     return (
       <div>
@@ -10,4 +10,3 @@ export default class App extends Component {
     )
   }
 }
-
