@@ -4,7 +4,7 @@ import styles from './PokeItem.module.css';
 export default class PokeItem extends Component {
   render() {
     return (
-      <div>
+      <div className={styles.item}>
        <img src={this.props.pokeData.url_image} alt={this.props.pokeData.pokemon} />
        <h3>{this.props.pokeData.pokemon}</h3>
       </div>

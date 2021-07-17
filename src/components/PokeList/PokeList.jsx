@@ -7,9 +7,11 @@ export default class PokeList extends Component {
     return (
       <div>
         <h3>Pokemon List</h3>
-        {
-          this.props.data.map(poke => <PokeItem key={poke.pokemon} pokeData={poke}/>)
-        }
+        <div className={styles.list}>
+          {
+            this.props.data.map(poke => <PokeItem key={poke.pokemon} pokeData={poke}/>)
+          }
+        </div>
       </div>
     )
   }
