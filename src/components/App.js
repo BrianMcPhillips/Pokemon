@@ -10,7 +10,8 @@ export default class App extends Component {
 
   componentDidMount = async() => {
     const data = await request.get('https://alchemy-pokedex.herokuapp.com/api/pokedex');
-    this.setState({ pokeState: data });
+    this.setState({ pokeState: data.body.results });
+    console.log(this.state.pokeState);
   }
   render() {
     return (
