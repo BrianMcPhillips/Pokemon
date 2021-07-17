@@ -5,7 +5,7 @@ export default class PokeItem extends Component {
   render() {
     return (
       <div>
-        Hello World
+       Hello World
       </div>
     )
   }
