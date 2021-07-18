@@ -5,11 +5,13 @@ import PokeItem from './PokeItem/PokeItem';
 export default class PokeList extends Component {
   render() {
     return (
-      <div>
+      <div className={styles.body}>
         <h3>Pokemon List</h3>
-        {
-          this.props.data.map(poke => <PokeItem key={poke.pokemon} pokeData={poke}/>)
-        }
+        <div className={styles.list}>
+          {
+            this.props.data.map(poke => <PokeItem key={poke.pokemon} pokeData={poke}/>)
+          }
+        </div>
       </div>
     )
   }
