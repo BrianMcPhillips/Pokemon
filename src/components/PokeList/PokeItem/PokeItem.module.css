@@ -8,6 +8,8 @@
   align-items: center;
   flex-direction: column;
   border-radius: 10px;
+  outline: 2px;
+  column-gap: 5px;
   
 }
 

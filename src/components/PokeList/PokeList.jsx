@@ -5,7 +5,7 @@ import PokeItem from './PokeItem/PokeItem';
 export default class PokeList extends Component {
   render() {
     return (
-      <div>
+      <div className={styles.body}>
         <h3>Pokemon List</h3>
         <div className={styles.list}>
           {
