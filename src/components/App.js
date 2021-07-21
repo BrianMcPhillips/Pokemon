@@ -6,12 +6,15 @@ import {
   Switch
 } from 'react-router-dom';
 import SearchPage from './SearchPage/SearchPage';
+import DetailPage from './DetailPage/DetailPage';
+import Header from './Header/Header';
 
 
 export default class App extends Component {
   render() {
     return (
       <div>
+        <Header />
         <Router>
           <Switch>
             <Route
@@ -19,6 +22,13 @@ export default class App extends Component {
               exact
               render={(routerProps) => 
               <SearchPage {...routerProps} 
+              />}
+            />
+            <Route 
+              path="/detail"
+              exact
+              render={(routerProps) => 
+              <DetailPage {...routerProps}
               />}
             />
           </Switch>

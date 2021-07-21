@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import styles from './SearchPage.module.css';
 import request from 'superagent';
 import PokeList from '../PokeList/PokeList';
-import Header from '../Header/Header';
 import SearchBar from '../SearchBar/SearchBar';
 import options from '../../assets/data';
 
@@ -36,7 +35,6 @@ export default class SearchPage extends Component {
     })
     return (
       <div className={styles.App}>
-        <Header />
         <SearchBar 
           data={options} 
           handleOption={this.handleOption} 
