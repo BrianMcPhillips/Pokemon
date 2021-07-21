@@ -2,15 +2,21 @@ import React, { Component } from 'react'
 
 export default class SearchBar extends Component {
   render() {
+    const {
+      data, 
+      handleOption, 
+      handleName, 
+      handleClick 
+    } = this.props; 
     return (
       <div>
-        <select onChange={this.props.handleOption} >
+        <select onChange={handleOption} >
           {
-            this.props.data.map(booger => <option key={booger} value={booger}>{booger}</option>)
+            data.map(booger => <option key={booger} value={booger}>{booger}</option>)
           }
         </select>
-        <input onChange={this.props.handleName} type="text"></input>
-        <button onClick={this.props.handleClick}>Fetch Pokemon</button>
+        <input onChange={handleName} type="text"></input>
+        <button onClick={handleClick}>Fetch Pokemon</button>
       </div>
     )
   }

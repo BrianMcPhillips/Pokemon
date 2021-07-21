@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import styles from './PokeItem.module.css';
+import { Link } from 'react-router-dom';
 
 export default class PokeItem extends Component {
   render() {
+    const { pokeData } = this.props;
     return (
-      <div className={styles.item}>
-       <img src={this.props.pokeData.url_image} alt={this.props.pokeData.pokemon} />
-       <h3>{this.props.pokeData.pokemon}</h3>
-       <p>Attack: {this.props.pokeData.attack}</p>
-       <p>Defense: {this.props.pokeData.defense}</p>
-      </div>
+      <Link>
+        <div className={styles.item}>
+          <img src={pokeData.url_image} alt={pokeData.pokemon} />
+          <h3>{pokeData.pokemon}</h3>
+          <p>Attack: {pokeData.attack}</p>
+          <p>Defense: {pokeData.defense}</p>
+        </div>
+      </Link>
     )
   }
 }
