@@ -4,9 +4,9 @@ import styles from './Header.module.css';
 export default class Header extends Component {
   render() {
     return (
-      <div className={styles.header}>
+      <header className={styles.header}>
         <h1>Pokemon</h1>
-      </div>
+      </header>
     )
   }
 }
