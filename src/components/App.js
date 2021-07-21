@@ -14,8 +14,8 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        <Header />
         <Router>
+        <Header />
           <Switch>
             <Route
               path="/"
