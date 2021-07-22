@@ -18,18 +18,16 @@ export default class App extends Component {
         <Header />
           <Switch>
             <Route
-              path="/"
+              path='/'
               exact
               render={(routerProps) => 
               <SearchPage {...routerProps} 
               />}
             />
             <Route 
-              path="/detail"
+              path="/detail/:myPokemonId"
               exact
-              render={(routerProps) => 
-              <DetailPage {...routerProps}
-              />}
+              render={(routerProps) => <DetailPage {...routerProps} />}
             />
           </Switch>
         </Router>

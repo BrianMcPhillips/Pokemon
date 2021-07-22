@@ -29,8 +29,9 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const filteredPoke = this.state.pokeState.filter(poke => {
-      return this.state.option === 'All' ? true : this.state.option === poke.type_1;
+    const { pokeState, option } = this.state;
+    const filteredPoke = pokeState.filter(poke => {
+      return option === 'All' ? true : option === poke.type_1;
 
     })
     return (
