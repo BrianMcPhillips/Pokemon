@@ -8,11 +8,12 @@ export default class SearchBar extends Component {
       handleName, 
       handleClick 
     } = this.props; 
+
     return (
       <div>
         <select onChange={handleOption} >
           {
-            data.map(booger => <option key={booger} value={booger}>{booger}</option>)
+            data.map(option => <option key={option} value={option}>{option}</option>)
           }
         </select>
         <input onChange={handleName} type="text"></input>
