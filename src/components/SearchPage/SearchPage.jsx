@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import styles from './SearchPage.module.css';
 import request from 'superagent';
-import PokeList from '../PokeList/PokeList';
-import SearchBar from '../SearchBar/SearchBar';
-import options from '../../assets/data';
+import PokeList from './PokeList/PokeList';
+import SearchBar from './SearchBar/SearchBar';
+import keyWord from '../../assets/data';
 
 export default class SearchPage extends Component {
   state = {
     pokeState: [],
-    option: 'All',
-    name: ''
+    option: 'pokemon',
+    term: ''
   }
 
   componentDidMount = async() => {
@@ -17,30 +17,31 @@ export default class SearchPage extends Component {
     this.setState({ pokeState: data.body.results });
   }
   handleClick = async() => {
-    const data = await request.get(`https://alchemy-pokedex.herokuapp.com/api/pokedex?perPage=200&pokemon=${this.state.name}`);
+    const data = await request.get(`https://alchemy-pokedex.herokuapp.com/api/pokedex?perPage=200&${this.state.option}=${this.state.term}`);
     this.setState({ pokeState: data.body.results });
   }
   handleOption = (e) => {
     this.setState({ option: e.target.value })
   }
-  handleName = (e) => {
+  handleTerm = (e) => {
     e.preventDefault();
-    this.setState({ name: e.target.value });
+    this.setState({ term: e.target.value });
   }
 
   render() {
-    const filteredPoke = this.state.pokeState.filter(poke => {
-      return this.state.option === 'All' ? true : this.state.option === poke.type_1;
+    const { pokeState } = this.state;
+    // const filteredPoke = pokeState.filter(poke => {
+    //   return option === 'All' ? true : option === poke.type_1;
 
-    })
+    // })
     return (
       <div className={styles.App}>
         <SearchBar 
-          data={options} 
+          data={keyWord} 
           handleOption={this.handleOption} 
-          handleName={this.handleName}
+          handleTerm={this.handleTerm}
           handleClick={this.handleClick} />
-        <PokeList data={filteredPoke}/>
+        <PokeList data={pokeState}/>
       </div>
     )
   }

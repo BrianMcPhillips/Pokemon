@@ -1,11 +1,8 @@
-const options = [
-  'All',
-  'normal',
-  'grass',
-  'electric',
-  'poison',
-  'rock',
-  'fire'
+const keyWord = [
+  'name',
+  'type',
+  'attack',
+  'defense'
 ]
 
-export default options;
+export default keyWord;
