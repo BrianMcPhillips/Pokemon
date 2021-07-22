@@ -1,4 +1,4 @@
-const options = [
+const keyWord = [
   'All',
   'normal',
   'grass',
@@ -8,4 +8,4 @@ const options = [
   'fire'
 ]
 
-export default options;
+export default keyWord;

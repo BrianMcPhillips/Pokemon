@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import request from 'superagent';
-import PokeItem from '../PokeList/PokeItem/PokeItem';
+
 
 export default class DetailPage extends Component {
   state = {
@@ -15,10 +15,20 @@ export default class DetailPage extends Component {
     this.setState({ pokemon: singlePoke})
   }
   render() {
-    console.log(this.props);
+    const {
+      pokemon: {
+        url_image,
+        pokemon,
+        attack,
+        defense
+      }
+    } = this.state;
     return (
       <div>
-        <PokeItem pokeData={this.state.pokemon} />
+        <img src={url_image} alt={pokemon} />
+        <h3>{pokemon}</h3>
+        <p>Attack: {attack}</p>
+        <p>Defense: {defense}</p>
       </div>
     )
   }

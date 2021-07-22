@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import styles from './SearchPage.module.css';
 import request from 'superagent';
-import PokeList from '../PokeList/PokeList';
-import SearchBar from '../SearchBar/SearchBar';
-import options from '../../assets/data';
+import PokeList from './PokeList/PokeList';
+import SearchBar from './SearchBar/SearchBar';
+import keyWord from '../../assets/data';
 
 export default class SearchPage extends Component {
   state = {
@@ -29,19 +29,19 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { pokeState, option } = this.state;
-    const filteredPoke = pokeState.filter(poke => {
-      return option === 'All' ? true : option === poke.type_1;
+    const { pokeState } = this.state;
+    // const filteredPoke = pokeState.filter(poke => {
+    //   return option === 'All' ? true : option === poke.type_1;
 
-    })
+    // })
     return (
       <div className={styles.App}>
         <SearchBar 
-          data={options} 
+          data={keyWord} 
           handleOption={this.handleOption} 
           handleName={this.handleName}
           handleClick={this.handleClick} />
-        <PokeList data={filteredPoke}/>
+        <PokeList data={pokeState}/>
       </div>
     )
   }

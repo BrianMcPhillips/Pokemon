@@ -13,14 +13,15 @@ export default class PokeItem extends Component {
       } 
     } = this.props;
     return (
-      <Link to={`/detail/${pokemon}`}>
-        <div className={styles.item}>
+      <div className={styles.item}>
+        <Link to={`/detail/${pokemon}`}>
           <img src={url_image} alt={pokemon} />
-          <h3>{pokemon}</h3>
-          <p>Attack: {attack}</p>
-          <p>Defense: {defense}</p>
-        </div>
-      </Link>
+        </Link>
+        <h3>{pokemon}</h3>
+        <p>Attack: {attack}</p>
+        <p>Defense: {defense}</p>
+      </div>
+      
     )
   }
 }
