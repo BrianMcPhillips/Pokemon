@@ -8,8 +8,8 @@ import keyWord from '../../assets/data';
 export default class SearchPage extends Component {
   state = {
     pokeState: [],
-    option: 'All',
-    name: ''
+    option: 'pokemon',
+    term: ''
   }
 
   componentDidMount = async() => {
@@ -17,15 +17,15 @@ export default class SearchPage extends Component {
     this.setState({ pokeState: data.body.results });
   }
   handleClick = async() => {
-    const data = await request.get(`https://alchemy-pokedex.herokuapp.com/api/pokedex?perPage=200&pokemon=${this.state.name}`);
+    const data = await request.get(`https://alchemy-pokedex.herokuapp.com/api/pokedex?perPage=200&${this.state.option}=${this.state.term}`);
     this.setState({ pokeState: data.body.results });
   }
   handleOption = (e) => {
     this.setState({ option: e.target.value })
   }
-  handleName = (e) => {
+  handleTerm = (e) => {
     e.preventDefault();
-    this.setState({ name: e.target.value });
+    this.setState({ term: e.target.value });
   }
 
   render() {
@@ -39,7 +39,7 @@ export default class SearchPage extends Component {
         <SearchBar 
           data={keyWord} 
           handleOption={this.handleOption} 
-          handleName={this.handleName}
+          handleTerm={this.handleTerm}
           handleClick={this.handleClick} />
         <PokeList data={pokeState}/>
       </div>

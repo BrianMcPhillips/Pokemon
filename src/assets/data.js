@@ -1,11 +1,8 @@
 const keyWord = [
-  'All',
-  'normal',
-  'grass',
-  'electric',
-  'poison',
-  'rock',
-  'fire'
+  'name',
+  'type',
+  'attack',
+  'defense'
 ]
 
 export default keyWord;

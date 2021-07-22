@@ -5,16 +5,20 @@ export default class SearchBar extends Component {
     const {
       data, 
       handleOption, 
-      handleName, 
+      handleTerm, 
       handleClick 
     } = this.props; 
 
     return (
       <div>
-        <input onChange={handleName} type="text"></input>
+        <input onChange={handleTerm} type="text"></input>
         <select onChange={handleOption} >
           {
-            data.map(option => <option key={option} value={option}>{option}</option>)
+            data.map(option => 
+              option === 'name' 
+              ? <option key={'name'} value ={'pokemon'}>{'name'}</option>
+              : <option key={option} value={option}>{option}</option>
+            )
           }
         </select>
         <button onClick={handleClick}>Fetch Pokemon</button>
