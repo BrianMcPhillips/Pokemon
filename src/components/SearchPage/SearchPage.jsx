@@ -13,12 +13,20 @@ export default class SearchPage extends Component {
     page: 1
   }
 
+
   componentDidMount = async() => {
     const data = await request.get(
       `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.page}&perPage=20`
     );
     this.setState({ pokeState: data.body.results });
   }
+  
+  // componentDidUpdate = async(prevState) => {
+  //   if(prevState.page !== this.state.page) {
+  //     await this.makeRequest()
+  //   }
+  // }
+
   makeRequest = async() => {
     const data = await request.get(
       `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.page}&perPage=20&${this.state.option}=${this.state.term}`
@@ -26,7 +34,7 @@ export default class SearchPage extends Component {
     this.setState({ pokeState: data.body.results });
   }
   handleClick = async() => {
-    await this.setState({ page: 1 })
+    this.setState({ page: 1 })
     await this.makeRequest()
   }
   handleOption = (e) => {
@@ -37,14 +45,12 @@ export default class SearchPage extends Component {
     this.setState({ term: e.target.value });
   }
   handleNext = async() => {
-    this.setState({ page: this.state.page + 1 })
-    this.props.callback(this.state.page)
-    await this.makeRequest();
+    await this.setState({ page: this.state.page + 1 })
+    await this.makeRequest()
   }
   handlePrev = async() => {
-    this.setState({ page: this.state.page - 1 })
-    this.props.callback(this.state.page)
-    await this.makeRequest();
+    await this.setState({ page: this.state.page - 1 })
+    await this.makeRequest()
   }
 
   render() {
