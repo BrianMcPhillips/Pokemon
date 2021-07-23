@@ -1,0 +1,9 @@
+.SearchBar {
+  background-color: aliceblue;
+  display: flex;
+  align-items: center;
+  justify-content:flex-start;
+  flex-direction: column;
+  line-height: 10px;
+  
+}

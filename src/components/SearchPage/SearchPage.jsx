@@ -9,16 +9,25 @@ export default class SearchPage extends Component {
   state = {
     pokeState: [],
     option: 'pokemon',
-    term: ''
+    term: '',
+    page: 1
   }
 
   componentDidMount = async() => {
-    const data = await request.get(`https://alchemy-pokedex.herokuapp.com/api/pokedex?perPage=200`);
+    const data = await request.get(
+      `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.page}&perPage=20`
+    );
+    this.setState({ pokeState: data.body.results });
+  }
+  makeRequest = async() => {
+    const data = await request.get(
+      `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.page}&perPage=20&${this.state.option}=${this.state.term}`
+    );
     this.setState({ pokeState: data.body.results });
   }
   handleClick = async() => {
-    const data = await request.get(`https://alchemy-pokedex.herokuapp.com/api/pokedex?perPage=200&${this.state.option}=${this.state.term}`);
-    this.setState({ pokeState: data.body.results });
+    await this.setState({ page: 1 })
+    await this.makeRequest()
   }
   handleOption = (e) => {
     this.setState({ option: e.target.value })
@@ -27,21 +36,32 @@ export default class SearchPage extends Component {
     e.preventDefault();
     this.setState({ term: e.target.value });
   }
+  handleNext = async() => {
+    this.setState({ page: this.state.page + 1 })
+    this.props.callback(this.state.page)
+    await this.makeRequest();
+  }
+  handlePrev = async() => {
+    this.setState({ page: this.state.page - 1 })
+    this.props.callback(this.state.page)
+    await this.makeRequest();
+  }
 
   render() {
-    const { pokeState } = this.state;
-    // const filteredPoke = pokeState.filter(poke => {
-    //   return option === 'All' ? true : option === poke.type_1;
+    const { pokeState, page } = this.state;
 
-    // })
     return (
-      <div className={styles.App}>
+      <div className={styles.Search}>
         <SearchBar 
           data={keyWord} 
           handleOption={this.handleOption} 
           handleTerm={this.handleTerm}
           handleClick={this.handleClick} />
-        <PokeList data={pokeState}/>
+        <PokeList 
+          data={pokeState}
+          next={this.handleNext}
+          prev={this.handlePrev}
+          pageNum={page}/>
       </div>
     )
   }
