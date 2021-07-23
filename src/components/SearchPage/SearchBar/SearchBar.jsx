@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import styles from './SearchBar.module.css';
 
 export default class SearchBar extends Component {
   render() {
@@ -10,7 +11,8 @@ export default class SearchBar extends Component {
     } = this.props; 
 
     return (
-      <div>
+      <div className={styles.SearchBar}>
+        <h3>Search</h3>
         <input onChange={handleTerm} type="text"></input>
         <select onChange={handleOption} >
           {
