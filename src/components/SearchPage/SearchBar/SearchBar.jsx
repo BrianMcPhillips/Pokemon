@@ -5,7 +5,7 @@ export default class SearchBar extends Component {
   render() {
     const {
       data, 
-      handleOption, 
+      handleSearchBy, 
       handleTerm, 
       handleClick 
     } = this.props; 
@@ -14,7 +14,7 @@ export default class SearchBar extends Component {
       <div className={styles.SearchBar}>
         <h3>Search</h3>
         <input onChange={handleTerm} type="text"></input>
-        <select onChange={handleOption} >
+        <select onChange={handleSearchBy} >
           {
             data.map(option => 
               option === 'name' 
