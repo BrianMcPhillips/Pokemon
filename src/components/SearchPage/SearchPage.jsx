@@ -32,13 +32,21 @@ export default class SearchPage extends Component {
     const data = await request.get(
       `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.currentPage}&perPage=20&${this.state.searchBy}=${this.state.term}`
     );
+
     this.setState({ 
       pokeState: data.body.results,
       totalPages: Math.ceil(data.body.count / 20)
     });
+
+    const params = new URLSearchParams(this.props.location.search);
+    params.set('term', this.state.term);
+    params.set('searchBy', this.state.searchBy);
+    params.set('page', this.state.currentPage);   
+    this.props.history.push('?' + params.toString());
   }
-  handleClick = async() => {
-    await this.makeRequest()
+  handleClick = () => {
+    this.setState({ currentPage: 1 })
+    this.makeRequest()
   }
   handleSearchBy = async(e) => {
     await this.setState({ searchBy: e.target.value })
