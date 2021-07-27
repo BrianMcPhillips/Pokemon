@@ -4,7 +4,7 @@ import PokeItem from './PokeItem/PokeItem';
 
 export default class PokeList extends Component {
   render() {
-    const { data, prev, next, pageNum } = this.props;
+    const { data, prev, next, pageNum, totalPage } = this.props;
     return (
       <div className={styles.body}>
         <h3>Pokemon List</h3>
@@ -14,14 +14,16 @@ export default class PokeList extends Component {
           }
         </div>
         {
-          data.length >= 20 &&
+          totalPage > 1 &&
           <div className={styles.page}>
-              <h4>{pageNum}</h4>
+            <h4>{pageNum} of {totalPage}</h4>
             <div className={styles.buttons}>
               {
                 pageNum !== 1 && <button onClick={prev}>Prev</button>
               }
-              <button onClick={next}>Next</button>
+              {
+                pageNum !== totalPage && <button onClick={next}>Next</button>
+              }
             </div>
           </div>
         }

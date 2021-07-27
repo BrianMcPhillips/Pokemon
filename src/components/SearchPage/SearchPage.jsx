@@ -10,44 +10,42 @@ export default class SearchPage extends Component {
     pokeState: [],
     searchBy: 'pokemon',
     term: '',
-    currentPage: 1
+    currentPage: 1,
+    totalPages: 1
   }
 
   componentDidMount = async() => {
     const params = new URLSearchParams(this.props.location.search);
-    const searchBy = params.get('searchBy');
-    const page = params.get('page');
+    const option = params.get('searchBy');
+    const page = Number(params.get('page'));
     const term = params.get('term');
-
-    // console.log('searchBy', searchBy, '=>', 'page', page, '=>', 'term', term)
-    console.log(params);
-
-    await this.setState({
-      searchBy: searchBy,
-      currentPage: page,
-      term: term
-    });
-    
+    if(option !== null) { 
+      await this.setState({
+        searchBy: option,
+        currentPage: page,
+        term: term
+      });
+    }
     await this.makeRequest();
   }
   makeRequest = async() => {
     const data = await request.get(
       `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.currentPage}&perPage=20&${this.state.searchBy}=${this.state.term}`
     );
-    this.setState({ pokeState: data.body.results });
+    this.setState({ 
+      pokeState: data.body.results,
+      totalPages: Math.ceil(data.body.count / 20)
+    });
   }
   handleClick = async() => {
-    // this.setState({ page: 1 })
     await this.makeRequest()
   }
   handleSearchBy = async(e) => {
     await this.setState({ searchBy: e.target.value })
-    console.log(this.state.searchBy);
   }
   handleTerm = async(e) => {
     e.preventDefault();
     await this.setState({ term: e.target.value });
-    console.log(this.state.term);
   }
   handleNext = async() => {
     await this.setState({ currentPage: this.state.currentPage + 1 })
@@ -59,7 +57,7 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { pokeState, currentPage, term, searchBy } = this.state;
+    const { pokeState, currentPage, totalPages, term, searchBy } = this.state;
 
     return (
       <div className={styles.Search}>
@@ -74,7 +72,8 @@ export default class SearchPage extends Component {
           data={pokeState}
           next={this.handleNext}
           prev={this.handlePrev}
-          pageNum={currentPage}/>
+          pageNum={currentPage}
+          totalPage={totalPages}/>
       </div>
     )
   }
