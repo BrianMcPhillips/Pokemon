@@ -17,31 +17,19 @@ export default class SearchPage extends Component {
     const params = new URLSearchParams(this.props.location.search);
     const searchBy = params.get('searchBy');
     const page = params.get('page');
-    const search = params.get('search');
+    const term = params.get('term');
 
-    console.log('searchBy', searchBy, '=>', 'page', page, '=>', 'search', search)
+    // console.log('searchBy', searchBy, '=>', 'page', page, '=>', 'term', term)
+    console.log(params);
 
-    if(searchBy !== null) { await this.setState({
+    await this.setState({
       searchBy: searchBy,
       page: page,
-      term: search
+      term: term
     });
-    }
+    
     await this.makeRequest();
   }
-  // componentDidMount = async() => {
-  //   const data = await request.get(
-  //     `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.page}&perPage=20`
-  //   );
-  //   this.setState({ pokeState: data.body.results });
-  // }
-  
-  // componentDidUpdate = async(prevState) => {
-  //   if(prevState.page !== this.state.page) {
-  //     await this.makeRequest()
-  //   }
-  // }
-
   makeRequest = async() => {
     const data = await request.get(
       `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.page}&perPage=20&${this.state.searchBy}=${this.state.term}`
@@ -49,7 +37,7 @@ export default class SearchPage extends Component {
     this.setState({ pokeState: data.body.results });
   }
   handleClick = async() => {
-    this.setState({ page: 1 })
+    // this.setState({ page: 1 })
     await this.makeRequest()
   }
   handleSearchBy = async(e) => {
@@ -71,7 +59,7 @@ export default class SearchPage extends Component {
   }
 
   render() {
-    const { pokeState, page } = this.state;
+    const { pokeState, page, term, searchBy } = this.state;
 
     return (
       <div className={styles.Search}>
@@ -79,7 +67,9 @@ export default class SearchPage extends Component {
           data={keyWord} 
           handleSearchBy={this.handleSearchBy} 
           handleTerm={this.handleTerm}
-          handleClick={this.handleClick} />
+          handleClick={this.handleClick} 
+          term={term}
+          searchBy={searchBy}/>
         <PokeList 
           data={pokeState}
           next={this.handleNext}
