@@ -10,68 +10,62 @@ export default class SearchPage extends Component {
     pokeState: [],
     searchBy: 'pokemon',
     term: '',
-    page: 1
+    currentPage: 1,
+    totalPages: 1
   }
 
   componentDidMount = async() => {
     const params = new URLSearchParams(this.props.location.search);
-    const searchBy = params.get('searchBy');
-    const page = params.get('page');
-    const search = params.get('search');
-
-    console.log('searchBy', searchBy, '=>', 'page', page, '=>', 'search', search)
-
-    if(searchBy !== null) { await this.setState({
-      searchBy: searchBy,
-      page: page,
-      term: search
-    });
+    const option = params.get('searchBy');
+    const page = Number(params.get('page'));
+    const term = params.get('term');
+    if(option !== null) { 
+      await this.setState({
+        searchBy: option,
+        currentPage: page,
+        term: term
+      });
     }
     await this.makeRequest();
   }
-  // componentDidMount = async() => {
-  //   const data = await request.get(
-  //     `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.page}&perPage=20`
-  //   );
-  //   this.setState({ pokeState: data.body.results });
-  // }
-  
-  // componentDidUpdate = async(prevState) => {
-  //   if(prevState.page !== this.state.page) {
-  //     await this.makeRequest()
-  //   }
-  // }
-
   makeRequest = async() => {
     const data = await request.get(
-      `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.page}&perPage=20&${this.state.searchBy}=${this.state.term}`
+      `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.currentPage}&perPage=20&${this.state.searchBy}=${this.state.term}`
     );
-    this.setState({ pokeState: data.body.results });
+
+    this.setState({ 
+      pokeState: data.body.results,
+      totalPages: Math.ceil(data.body.count / 20)
+    });
+
+    const params = new URLSearchParams(this.props.location.search);
+    params.set('term', this.state.term);
+    params.set('searchBy', this.state.searchBy);
+    params.set('page', this.state.currentPage);   
+    this.props.history.push('?' + params.toString());
   }
-  handleClick = async() => {
-    this.setState({ page: 1 })
-    await this.makeRequest()
+  handleClick = () => {
+    this.setState({ currentPage: 1 })
+    this.makeRequest()
   }
   handleSearchBy = async(e) => {
     await this.setState({ searchBy: e.target.value })
-    console.log(this.state.searchBy);
   }
   handleTerm = async(e) => {
     e.preventDefault();
     await this.setState({ term: e.target.value });
-    console.log(this.state.term);
   }
   handleNext = async() => {
-    await this.setState({ page: this.state.page + 1 })
+    await this.setState({ currentPage: this.state.currentPage + 1 })
     await this.makeRequest()
   }
   handlePrev = async() => {
-    await this.setState({ page: this.state.page - 1 })
+    await this.setState({ currentPage: this.state.currentPage - 1 })
     await this.makeRequest()
   }
 
   render() {
-    const { pokeState, page } = this.state;
+    const { pokeState, currentPage, totalPages, term, searchBy } = this.state;
 
     return (
       <div className={styles.Search}>
@@ -79,12 +73,15 @@ export default class SearchPage extends Component {
           data={keyWord} 
           handleSearchBy={this.handleSearchBy} 
           handleTerm={this.handleTerm}
-          handleClick={this.handleClick} />
+          handleClick={this.handleClick} 
+          term={term}
+          searchBy={searchBy}/>
         <PokeList 
           data={pokeState}
           next={this.handleNext}
           prev={this.handlePrev}
-          pageNum={page}/>
+          pageNum={currentPage}
+          totalPage={totalPages}/>
       </div>
     )
   }
