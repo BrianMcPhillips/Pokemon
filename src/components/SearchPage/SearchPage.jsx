@@ -10,7 +10,7 @@ export default class SearchPage extends Component {
     pokeState: [],
     searchBy: 'pokemon',
     term: '',
-    page: 1
+    currentPage: 1
   }
 
   componentDidMount = async() => {
@@ -24,7 +24,7 @@ export default class SearchPage extends Component {
 
     await this.setState({
       searchBy: searchBy,
-      page: page,
+      currentPage: page,
       term: term
     });
     
@@ -32,7 +32,7 @@ export default class SearchPage extends Component {
   }
   makeRequest = async() => {
     const data = await request.get(
-      `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.page}&perPage=20&${this.state.searchBy}=${this.state.term}`
+      `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.currentPage}&perPage=20&${this.state.searchBy}=${this.state.term}`
     );
     this.setState({ pokeState: data.body.results });
   }
@@ -50,16 +50,16 @@ export default class SearchPage extends Component {
     console.log(this.state.term);
   }
   handleNext = async() => {
-    await this.setState({ page: this.state.page + 1 })
+    await this.setState({ currentPage: this.state.currentPage + 1 })
     await this.makeRequest()
   }
   handlePrev = async() => {
-    await this.setState({ page: this.state.page - 1 })
+    await this.setState({ currentPage: this.state.currentPage - 1 })
     await this.makeRequest()
   }
 
   render() {
-    const { pokeState, page, term, searchBy } = this.state;
+    const { pokeState, currentPage, term, searchBy } = this.state;
 
     return (
       <div className={styles.Search}>
@@ -74,7 +74,7 @@ export default class SearchPage extends Component {
           data={pokeState}
           next={this.handleNext}
           prev={this.handlePrev}
-          pageNum={page}/>
+          pageNum={currentPage}/>
       </div>
     )
   }

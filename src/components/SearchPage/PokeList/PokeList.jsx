@@ -17,9 +17,10 @@ export default class PokeList extends Component {
           data.length >= 20 &&
           <div className={styles.page}>
               <h4>{pageNum}</h4>
-              <p>page</p>
             <div className={styles.buttons}>
-              <button onClick={prev}>Prev</button>
+              {
+                pageNum !== 1 && <button onClick={prev}>Prev</button>
+              }
               <button onClick={next}>Next</button>
             </div>
           </div>
