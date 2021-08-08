@@ -1,9 +1,11 @@
+// Import Libraries Data and Components
 import React, { Component } from 'react';
 import styles from './SearchPage.module.css';
 import request from 'superagent';
 import PokeList from './PokeList/PokeList';
 import SearchBar from './SearchBar/SearchBar';
 import keyWord from '../../assets/data';
+
 
 export default class SearchPage extends Component {
   state = {
@@ -14,6 +16,7 @@ export default class SearchPage extends Component {
     totalPages: 1
   }
 
+  //Retrieve and set URLSearchParms to state on Load
   componentDidMount = async() => {
     const params = new URLSearchParams(this.props.location.search);
     const option = params.get('searchBy');
@@ -28,43 +31,49 @@ export default class SearchPage extends Component {
     }
     await this.makeRequest();
   }
+  
+  // Default function to make request to API with query params, set data from API to state set URL params to search bar from state
   makeRequest = async() => {
     const data = await request.get(
       `https://alchemy-pokedex.herokuapp.com/api/pokedex?page=${this.state.currentPage}&perPage=20&${this.state.searchBy}=${this.state.term}`
     );
-
     this.setState({ 
       pokeState: data.body.results,
       totalPages: Math.ceil(data.body.count / 20)
     });
-
     const params = new URLSearchParams(this.props.location.search);
     params.set('term', this.state.term);
     params.set('searchBy', this.state.searchBy);
     params.set('page', this.state.currentPage);   
     this.props.history.push('?' + params.toString());
   }
+  
   handleClick = () => {
     this.setState({ currentPage: 1 })
     this.makeRequest()
   }
+  
   handleSearchBy = async(e) => {
     await this.setState({ searchBy: e.target.value })
   }
+  
   handleTerm = async(e) => {
     e.preventDefault();
     await this.setState({ term: e.target.value });
   }
+  
   handleNext = async() => {
     await this.setState({ currentPage: this.state.currentPage + 1 })
     await this.makeRequest()
   }
+  
   handlePrev = async() => {
     await this.setState({ currentPage: this.state.currentPage - 1 })
     await this.makeRequest()
   }
 
   render() {
+    // Destructured State to be passed as props
     const { pokeState, currentPage, totalPages, term, searchBy } = this.state;
 
     return (
