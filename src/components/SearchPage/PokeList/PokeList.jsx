@@ -10,7 +10,7 @@ export default class PokeList extends Component {
     return (
       <div className={styles.body}>
         <h3>Pokemon List</h3>
-        //Map over data to pass props to individual character components and set them to state
+    //Map over data to pass props to individual character components and set them to state
         <div className={styles.list}>
           {
             data.map(poke => <PokeItem key={poke.pokemon} pokeData={poke}/>)
